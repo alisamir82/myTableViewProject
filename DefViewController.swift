@@ -14,11 +14,14 @@ class DefViewController: UIViewController {
     @IBOutlet weak var bigEmojiLable: UILabel!
    
     var emoji = " "
+    var desLabel = " "
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         bigEmoji.text = emoji
+        bigEmojiLable.text = desLabel
+        
     }
 
     override func didReceiveMemoryWarning() {
