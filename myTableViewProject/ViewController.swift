@@ -40,6 +40,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     
         self.emoji = emojis[indexPath.row]
         self.desc = emojisDescription[indexPath.row]
