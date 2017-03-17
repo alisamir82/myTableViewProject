@@ -12,10 +12,8 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     
     @IBOutlet weak var maintTableView: UITableView!
     
-    var emojis = ["😎","😍","🏛"]
-    var emojisDescription = ["dude with glasses","hears","house"]
-    var emoji = ""
-    var desc = ""
+    
+    var emojiArray : [Emoji] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,29 +21,56 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
        
         maintTableView.dataSource = self
         maintTableView.delegate = self
+        self.emojiArray = provideEmojiArray()
+        
     }
     
+    func provideEmojiArray () -> [Emoji]{
+    
+        var emojiArray : [Emoji] = []
+        
+        let emoji1 = Emoji()
+        emoji1.emojiString = "😎"
+        emoji1.emojiDescription = "dude with black glasses"
+        
+        let emoji2 = Emoji()
+        emoji2.emojiString = "😍"
+        emoji2.emojiDescription = "dude hearts"
+        
+        let emoji3 = Emoji()
+        emoji3.emojiString = "🏛"
+        emoji3.emojiDescription = "white house"
+        
+        emojiArray = [emoji1,emoji2,emoji3]
+        
+        return emojiArray
+    
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return emojis.count
+        return emojiArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    
+  
         let cell = UITableViewCell()
+        let emoji = emojiArray[indexPath.row]
         
-        cell.textLabel?.text = emojis[indexPath.row]
+        cell.textLabel?.text = emoji.emojiString + " " + emoji.emojiDescription
         
         return cell
         
     }
     
+  
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    
-        self.emoji = emojis[indexPath.row]
-        self.desc = emojisDescription[indexPath.row]
-        
-    performSegue(withIdentifier: "moveSeque", sender: emoji)
+   
+        let emojiSelected = emojiArray[indexPath.row]
+   
+        performSegue(withIdentifier: "moveSeque", sender: emojiSelected)
     
     }
     
@@ -53,14 +78,14 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
       
         let defVC = segue.destination as! DefViewController
         
-        defVC.emoji = self.emoji
-        defVC.desLabel = self.desc
-    
+        defVC.emojiObject = sender as! Emoji
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     
     
 }
